@@ -1,0 +1,29 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>500 - Internal Server Error</title>
+  <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+  <!-- Theme style -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tiny5&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href={%static "tryhard.css" %}>
+  
+</head>
+<body id="lag_error">
+  <h1 style = "color: red"> 500 Server Error</h1>
+    <p>Sorry!</p>
+    <p>Something went wrong on our end.<br>Please try again later!</p>
+  <!-- jQuery -->  
+    <script src= {%static "plugins/jquery/jquery.min.js" %}></script>
+  <!-- Bootstrap 4 -->
+    <script src={%static "plugins/bootstrap/js/bootstrap.bundle.min.js" %}></script>
+  <!-- AdminLTE App -->
+    <script src={%static "dist/js/adminlte.min.js" %}></script>
+
+</body>
+</html>
+

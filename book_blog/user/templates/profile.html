@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Tài khoản</title>
+    <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/font-awesome.min.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/owl.carousel.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/owl.theme.default.min.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "home_style.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "user_style.css" %}">
+    <link rel="icon" type="x-image/icon" href="{% static "favicon.ico" %}">
+</head>
+<body>
+    <section class="preloader">
+          <div class="spinner">
+               <span class="spinner-rotate"></span>
+          </div>
+    </section>
+    <div class="container">
+        <a href="{% url "home" %}" id="returnLink"><b>Quay lại trang chủ</b></a>
+        <br><br>
+        <div class="row">
+            <div class="col-md-3 col-xs-12">
+                
+                <img src="{{profile.avatar.url}}" alt="cvpcic" height="225" width="225">
+
+            </div>
+            <div class="col-md-9 col-xs-12">
+                <h2>{{profile.user.username}}</h2>
+                <p><b>Giới thiệu: </b>{{profile.description}}</p>
+                <p><b>Số bài đăng: {{profile.post_number}}</b></p>
+                <p><b>Rate trung bình: {{medium_rate_string}} <i class="fa fa-star"></i></b></p>
+                {% if is_user %}
+                    {% if user_name == profile.user %}
+                        {% comment %} <a id="changeLink" style="cursor:pointer;" >
+                            <b>Chỉnh sửa thông tin cá nhân</b>
+                        </a> {% endcomment %}
+                        <br>
+                        <a id="returnLink" style="cursor:pointer;" onclick="document.getElementById('logout-form').submit(); return false;">
+                            <b>Đăng xuất</b>
+                        </a>
+
+                        <form id="logout-form" action="{% url 'logout' %}" method="POST" style="display: none;">
+                            {% csrf_token %}
+                        </form>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+        <br><br>
+        <h3>Blog tiểu biểu:</h3>
+        <br>
+        {% for post in blogs %}
+            <div class="col-md-4 col-sm-4">
+                <div class="courses-thumb courses-thumb-secondary">
+                    <div class="courses-top">
+                            <div class="courses-image">
+                                
+                                <img src="{{post.book_image.url}}" class="img-responsive" alt="">
+                            </div>
+                            <div class="courses-date">
+                                <a href="{% url "profile" name=post.author.username %}">
+                                    <span title="Author" class="author-link">
+                                        <img src="{{post.author.profile.avatar.url}}" class="rounded_avatar">&nbsp;
+                                        {{post.author}}
+                                    </span>
+                                </a>
+                                <span title="Date">
+                                    <i class="fa fa-calendar"></i> {{post.update_date|date:"d/m/Y"}}
+                                </span>
+                                <span>
+                                    <span title="Views">
+                                        <i class="fa fa-star"></i> {{post.book_medium_rate}} 
+                                        ({{post.book_rate_times}} <i class="fa fa-user"></i>)
+                                    </span>
+                                    <span title="Comments">
+                                        <i class="fa fa-comment"></i> {{post.book_comment_times}} 
+                                    </span>
+                                </span>
+                            </div>
+                    </div>
+
+                    <div class="courses-detail">
+                            <h3 class="limit-text"><a href="{% url "detail" pk=post.id_number_shuffle %}">
+                                Review {{post.book_topic}}:
+                                {{post.book_name|truncatewords:20}}
+                            </a></h3>
+                            <p class="limit-text">{{post.book_description|truncatewords:20}}</p>
+                    </div>
+
+                    <div class="courses-info">
+                            <a href="{% url "detail" pk=post.id_number_shuffle %}" class="section-btn btn btn-primary btn-block">Đọc thêm</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <script src="{% static "js/jquery.js" %}"></script>
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
+    <script src="{% static "js/owl.carousel.min.js" %}"></script>
+    <script src="{% static "js/smoothscroll.js" %}"></script>
+    <script src="{% static "js/custom.js" %}"></script>
+    <script src="{% static "home_script.js" %}"></script>
+    <script>
+        {% if messages %}
+            {% for message in messages %}
+                alert("{{ message|escapejs }}");
+            {% endfor %}
+        {% endif %}
+    </script>
+</body>
+</html>

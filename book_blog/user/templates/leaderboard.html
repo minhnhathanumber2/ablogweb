@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+        <section class="section-background">
+            <div class="container">
+                <div class="text-center">
+                        <h1>Bảng xếp hạng</h1>
+
+                        <br>
+
+                        <p class="lead">Top người dùng</p>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col-md-1 col-xs-12">
+                        <h2>Hạng</h2>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                        <h2>Username</h2>
+                    </div>
+                    <div class="col-md-2 col-xs-12">
+                        <h2>Số blog</h2>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                        <h2>Rate trung bình</h2>
+                    </div>
+                </div>
+                {% for profile, rate in profiles %}
+                    <div class="row text-center">
+                        <div class="col-md-1 col-xs-12">
+                            <h2>{{forloop.counter}}</h2>
+                        </div>
+                        <div class="col-md-6 col-xs-12">
+                            <h2>{{profile.user.username}}</h2>
+                        </div>
+                        <div class="col-md-2 col-xs-12">
+                            <h2>{{profile.post_number}}</h2>
+                        </div>
+                        <div class="col-md-3 col-xs-12">
+                            <h2>{{rate}}</h2>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>           
+        </section>
+{% endblock content %}

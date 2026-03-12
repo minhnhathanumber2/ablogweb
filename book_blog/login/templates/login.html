@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập</title>
+    <link rel="stylesheet" type="text/css" href="{% static "bootstrap_css.css" %}">
+    <link rel = "stylesheet" type = "text/css" href = {% static "login_style.css" %}>
+    <link rel="icon" type="x-image/icon" href="{% static "favicon.ico" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "material_symbols_rounded/material_symbols_rounded.css" %}">
+</head>
+<body>
+  <div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card" id="login-card">
+      <div class="card-header text-center"><h3>Đăng nhập</h3></div>
+      <div class="card-body">
+                        {% comment %} <a id="password_show" class="material-symbols-rounded">visibility_off</a> {% endcomment %}
+        <form method="POST">
+          {% csrf_token %}
+          <div class="input-group mb-3">
+            <input type="text" autocomplete="off" class="form-control" placeholder="Tên đăng nhập" name="username" id = "username_input">
+          </div>
+          <div class="row">
+            <div class="col-10">
+              <div class="input-group mb-3">
+                <input type="password" autocomplete="off" class="form-control" placeholder="Mật khẩu" name="password" id = "password_input">
+              </div>
+            </div>
+            <div class="col-2">
+              <span id="password_show" class="material-symbols-rounded" style="padding-top:7px;">visibility</span>
+            </div>
+          </div>
+          {% comment %} <div class="row" style="margin-bottom: 10px;">
+            <div class="col-5">
+              <input type="checkbox" id="password_show">
+              <span>Hiện mật khẩu</span>
+            </div>
+          </div> {% endcomment %}
+          <div class="row text-center">
+            <div class="col-4">
+              <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
+            </div>
+            <div class="col-4"></div>
+            <div class="col-4">
+              <p><a href="{% url "register" %}" class="text-center">Đăng ký</a></p>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script>
+    {% if messages %}
+        {% for message in messages %}
+            alert("{{ message|escapejs }}");
+        {% endfor %}
+    {% endif %}
+  </script>
+  <script src="{% static "bootstrap_js.js" %}"></script>
+  <script src="{% static "login_script.js" %}"></script>
+</body>
+</html>
