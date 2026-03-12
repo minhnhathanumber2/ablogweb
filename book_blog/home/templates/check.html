@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+    <h3>Các blog chờ duyệt</h3>
+    {% for post in post_list %}
+        <form method="POST" action="">
+            {% csrf_token %}
+            <h3><a href="{% url "detail" pk=post.id_number_shuffle %}">{{ forloop.counter }}:#{{post.id}}</a></h3>
+            <p><span>Tên sách:</span>{{post.book_name}}</p>
+            <p>Chủ đề:{{post.book_topic}}</p>
+            <img src="{{ post.book_image.url }}" alt="image" height="310" width="200">
+            <p>Bài viết:</p>
+            <p><b>{{post.book_description}}</b></p>
+            <input type="number" name="post_id" value="{{post.id}}" style="display:none;">
+            <button type="submit" name="state_select" value="keep">Chấp nhận</button>
+            <button type="submit" name="state_select" value="remove">Từ chối</button>
+        </form>
+    {% endfor %}
+    <script defer>
+        document.getElementById("list_check_id").classList.add("active")
+    </script>
+{% endblock content %}

@@ -1,0 +1,259 @@
+{% extends "base.html" %}
+{% block content %}
+     <section>
+          <div class="container">
+               <h4>
+                    <a href="{% url "all_topics" %}">Danh sách blog</a> / 
+                    <a class="blog_link" href="{% url "topic" slug=blog.book_topic.slug %}">{{blog.book_topic}}</a> / 
+                    <span style="color: gray">Review {{blog.book_topic.name}} : {{blog.book_name}}</span>
+               </h4>
+               <h2>Review {{blog.book_topic.name}} : {{blog.book_name}}</h2>
+
+               <p class="lead">
+                    <a class="detail-author-link" href="{% url "profile" name=blog.author.username %}">
+                         <img src="{{blog.author.profile.avatar.url}}" class="detail_rounded_avatar">
+                    {{blog.author}}</a> &nbsp;&nbsp;&nbsp;
+                    <i class="fa fa-calendar"></i> {{blog.update_date|date:"d/m/Y"}} &nbsp;&nbsp;&nbsp;
+                    <i class="fa fa-star"></i> <span class="medium_rate_show">{{blog.book_medium_rate}}</span>
+               </p>
+               <p class="lead">
+                    {% if blog.state %}
+                         <span class="rate_time_show">{{blog.book_rate_times}}</span> lượt đánh giá &nbsp;&nbsp;&nbsp;
+                         {{blog.book_comment_times}} lượt bình luận
+                    {% else %}
+                         Blog đang chờ duyệt...
+                    {% endif %}
+               </p>
+               {% comment %} <img src="{% static "images/other-image-fullscreen-1-1920x700.jpg" %}" class="img-responsive" alt=""> {% endcomment %}
+               <img src="{{ blog.book_image.url }}" class="img-responsive" alt="" height="1280" width="1920">
+               
+               <br>
+               
+               <div id="blog_text">
+                    <p id="blog_description"></p>
+                    <br>
+                    <div id="paragraph_stack">
+                    {% for paragraph in paragraphs %}
+                         <h3 class="blog_title_text">{{paragraph.index}}. {{paragraph.title}}</h3>
+                         <div class="blog_detail_text"></div>
+                         <br>
+                    {% endfor %}
+                    </div>
+                    <p id="blog_summary"></p>
+                    <br>
+               </div>
+               
+               <br>
+
+               <div class="row">
+                    <div class="col-md-4 col-xs-12 pull-right">
+                         <h3>Đánh giá ({{blog.book_rate_times}}):</h3>
+                         {% if blog.state %}{% if is_user %}
+                         <form class="vote_rate" method="POST", action="">
+                              {% csrf_token %}
+                              <input type="hidden" name="rate_submit" value="0" id="rate_input">
+                              <i class="fa fa-star vote_star {% if rate > 0 %}rated{% endif %}" id="star_1" onclick="rate_form(event, this, 1)" onmouseenter="starHover(1)" onmouseleave="starHover({{rate}})"></i>&nbsp;
+                              <i class="fa fa-star vote_star {% if rate > 1 %}rated{% endif %}" id="star_2" onclick="rate_form(event, this, 2)" onmouseenter="starHover(2)" onmouseleave="starHover({{rate}})"></i>&nbsp;
+                              <i class="fa fa-star vote_star {% if rate > 2 %}rated{% endif %}" id="star_3" onclick="rate_form(event, this, 3)" onmouseenter="starHover(3)" onmouseleave="starHover({{rate}})"></i>&nbsp;
+                              <i class="fa fa-star vote_star {% if rate > 3 %}rated{% endif %}" id="star_4" onclick="rate_form(event, this, 4)" onmouseenter="starHover(4)" onmouseleave="starHover({{rate}})"></i>&nbsp;
+                              <i class="fa fa-star vote_star {% if rate > 4 %}rated{% endif %}" id="star_5" onclick="rate_form(event, this, 5)" onmouseenter="starHover(5)" onmouseleave="starHover({{rate}})"></i>
+                         </form>
+                         {% if rate %}
+                         <h5 id="rate_message">Bạn đã vote {{rate}} <i class="fa fa-star"></i> cho blog này!</h5>
+                         {% else %}
+                         <h5 id="rate_message">Bạn chưa vote cho blog này!</h5>
+                         {% endif %}
+                         {% else %}
+                         <h4>Bạn cần đăng nhập để đánh giá bài viết này!</h4>
+                         {% endif %}{% endif %}
+                         <br>
+                         <h3>Các blog khác cùng tác giả:</h3>
+                         {% if high_rate_blogs %}
+                              
+                              <ul class="list">
+                                   {% for blog in high_rate_blogs %}
+                                        <li>
+                                             <a href="{% url "detail" pk=blog.id_number_shuffle %}">
+                                                  {{blog.book_name}}
+                                             </a>
+                                        </li>
+                                   {% endfor %}
+                              </ul>
+                         {% else %}
+                              <h4>Không có blog nào để hiển thị!</h4>
+                         {% endif %}
+                    </div>
+
+                    <div class="col-md-8 col-xs-12" style="padding-bottom: 20px;">
+                         <h3>Bình luận (<span class="rate_time_show">{{blog.book_comment_times}}</span>):</h3>
+
+                         {% if not blog.book_comment_times %}
+                              <p>Chưa có bình luận nào! Hãy là người đầu tiên bình luận!</p>
+                         {% else %}
+                              {% for user_state, comment in comments %}
+                                   <p>
+                                        <b>
+                                             <a class="detail-author-link" href="{% url "profile" name=comment.author.username %}">
+                                                  <img src="{{comment.author.profile.avatar.url}}" class="rounded_avatar">
+                                             {{comment.author}}</a>
+                                        </b>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <i class="fa fa-calendar"></i>
+                                        {{comment.date|date:"d/m/Y"}}
+                                   </p>
+                                   <p>{{comment.comment}}</p>
+                                   <form method="POST" action="">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="like_submit" value="{{ comment.id }}">
+                                        <p>
+                                             <a href="#" class="like_button" onclick="like_form(event, this)">
+                                                  <i class="fa fa-thumbs-up {% if user_state %}liked{% endif %}" id="like_button_{{comment.id}}"></i>
+                                             </a>
+                                             &nbsp;&nbsp;
+                                             <span id="number_like_of_{{comment.id}}">{{comment.like_times}}</span> thích
+                                        </p>
+                                   </form>
+                                   <hr>
+                              {% endfor %}
+                         {% endif %} 
+                         <br>
+                         {% if blog.state %}
+                         <h4>Thêm bình luận</h4>
+                         {% if is_user %}
+                         <form method="POST" action="" class="form" id="comment_form">
+                              {% csrf_token %}
+                              <label class="control-label">
+                                   Lưu ý:
+                                   <br>
+                                   - Hãy cân nhắc từ ngữ trước khi bình luận vì bạn sẽ không thể sửa lại bình luận sau khi đăng!
+                                   <br>
+                                   - Trau chuốt từ ngữ làm sao để không quá 500 kí tự, vì đây không phải nơi bạn viết luận cuối năm!
+                              </label>
+                              <div class="form-group">
+                                   <textarea name="comment_text" class="form-control" rows="10" autocomplete="off" placeholder="Bạn nghĩ gì về blog này?"></textarea>
+                              </div>
+
+                              <button name="comment_submit" type="submit" class="section-btn btn btn-primary" value="comment">Đăng!</button>
+                         </form>
+                         {% else %}
+                         <h4>Bạn phải đăng nhập để bình luận!</h4>
+                         {% endif %}
+                         {% elif user_name.is_staff %}
+                         <h2>Chấp nhận blog này?</h2>
+                         <form method="POST" action="">
+                              {% csrf_token %}
+                              <button type="submit" name="state_select" value="keep" class="section-btn btn btn-success">
+                                   Chấp nhận
+                              </button>
+                              <button type="submit" name="state_select" value="remove"
+                              class="section-btn btn btn-danger" style="margin-left: 10vw;">
+                                   Từ chối
+                              </button>
+                         </form>
+                         {% endif %}
+                    </div>
+               </div>
+          </div>
+     </section>
+     <script>
+          function like_form(event, el) {
+               event.preventDefault(); // chặn reload trang
+               const formData = new FormData(el.closest("form"));
+
+               fetch("{% url 'detail' pk=blog.id_number_shuffle %}", {
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                         "X-CSRFToken": formData.get("csrfmiddlewaretoken")
+                    }
+               })
+               .then(response => response.json())
+               .then(data => {
+                    if (data.success){
+                         document.getElementById("number_like_of_" + data.comment_id).innerText = data.new_like_count;
+                         if (data.is_liked){
+                              document.getElementById("like_button_" + data.comment_id).classList.add("liked");
+                         }
+                         else{
+                              document.getElementById("like_button_" + data.comment_id).classList.remove("liked");
+                         }
+                    }
+                    else alert(data.message);
+               })
+               .catch(error => console.error("Error:", error));
+          }
+          function rate_form(event, el, rate) {
+               event.preventDefault(); // chặn reload trang
+               document.getElementById("rate_input").value=rate
+               const formData = new FormData(el.closest("form"));
+
+               fetch("{% url 'detail' pk=blog.id_number_shuffle %}", {
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                         "X-CSRFToken": formData.get("csrfmiddlewaretoken")
+                    }
+               })
+               .then(response => response.json())
+               .then(data => {
+                    if (data.success){
+                         for (let item of document.getElementsByClassName("rate_time_show")) {
+                              item.innerText = data.rate_time
+                         }
+                         for (let item of document.getElementsByClassName("medium_rate_show")) {
+                              item.innerText = data.medium_rate
+                         }
+                         
+                         for (let i = 1; i<=5; ++i){
+                              document.getElementById("star_" + i).onmouseleave = () => {
+                                   starHover(data.rate);
+                              }; 
+                              document.getElementById("star_" + i).classList.remove("rated");
+                         }
+                         for (let i = 1; i<=data.rate; ++i) {
+                              document.getElementById("star_" + i).classList.add("rated");
+                         }
+                         document.getElementById("rate_message").innerHTML = `Bạn đã vote ` + data.rate + ` <i class="fa fa-star"></i> cho blog này!`;
+                    }
+                    else alert(data.message);
+               })
+               .catch(error => console.error("Error:", error));
+          }
+
+          function stringProcessing(str) {
+               // Markdown
+               //Chỉnh to: ***text***
+                //Chỉnh to: #text#
+                str = str.replace(/\#(.*?)\#/g, '<h4>$1</h4>');
+
+               // bold **text**
+               str = str.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+
+               // italic *text*
+               str = str.replace(/\*(.*?)\*/g, "<em>$1</em>");
+
+               // underline __text__
+               str = str.replace(/\__(.*?)\__/g, "<u>$1</u>")
+
+               // strike ~~text~~
+               str = str.replace(/~~(.*?)~~/g, "<del>$1</del>");
+               
+               // xuống dòng: \n
+               str = str.replace(/\n/g, "<br>");
+
+
+
+               return str;
+          }
+          document.getElementById("blog_description").innerHTML = stringProcessing("{{blog.book_description|escapejs}}");
+          document.getElementById("blog_summary").innerHTML = stringProcessing("{{blog.book_summary|escapejs}}");
+          let paragraphs = document.getElementsByClassName("blog_detail_text");
+          {% for paragraph in paragraphs %}
+               paragraphs[{{forloop.counter}} - 1].innerHTML = stringProcessing("{{paragraph.detail|escapejs}}");
+          {% endfor %}
+          {% comment %} for (let i of {{paragraphs_detail}}){
+               paragraphs[i].innerHTML = stringProcessing("{{paragraphs_detail}}");
+          } {% endcomment %}
+          
+     </script>
+{% endblock content %}

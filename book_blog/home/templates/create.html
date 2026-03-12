@@ -1,0 +1,268 @@
+{% extends "base.html" %}
+{% block content %}
+    {% load static %}
+    {% if is_user %}
+        <section class="section-background">
+            <div class="container">
+                <div class="text-center">
+                        <h1>Tạo blog mới</h1>
+
+                        <br>
+
+                        <p class="lead">Đóng góp những cái nhìn mới, đa chiều</p>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="container">
+                <h3>Lưu ý trước khi viết blog:</h3>
+                <div class="collapse" id="CollapseText">
+                    <p>- Điền và viết đầy đủ các mục.</p>
+                    <p>- Ở phần "Các đoạn văn", chỉ được thêm vừa đủ các đoạn văn. Một blog phải có ít nhất 1 đoạn văn.</p>
+                    <p>- Sau khi viết xong, ấn nút "Đăng" để gửi blog, và chúng tôi sẽ kiểm duyệt blog để quyết định nên đăng blog hay không.</p>
+                    <p>- Bạn có thể dùng cách viết Markdown để viết kiểu in đậm, in nghiêng,..., ở các mục được đánh dấu "<span style="color: red;">*</span>".</p>
+                    <p>- Ấn vào nút "Xem trước" để xem trước blog của mình.</p>
+                    <p>- Luật viết Markdown (Theo thứ tự ưu tiên, mục sau có thể viết bên trong mục trước):</p>
+                    <p>+ Tiêu đề: #(Đoạn tiêu đề)#</p>
+                    <h4>Đoạn tiêu đề</h4>
+                    <p>+ In đậm: **(Đoạn in đậm)**</p>
+                    <strong>Đoạn in đậm</strong>
+                    <br><br>
+                    <p>+ In nghiêng: *(Đoạn in nghiêng)*</p>
+                    <em>Đoạn in nghiêng</em>
+                    <br><br>
+                    <p>+ Gạch chân: __(Đoạn gạch chân)__</p>
+                    <u>Đoạn gạch chân</u>
+                    <br><br>
+                    <p>+ Gạch ngang: ~~(Đoạn gạch ngang)~~</p>
+                    <del>Đoạn gạch ngang</del>
+                    <br><br>
+                    <p>+ Xuống dòng: phím ENTER</p>
+                    <p>* Lưu ý:</p>
+                    <p>+ Sau phần markdown tiêu đề sẽ tự động xuống dòng, sử dụng ENTER sẽ làm tiêu đề với nội dung cách xa hơn.</p>
+                    <p>+ Sử dụng markdown tiêu đề cho phần giới thiệu và tổng kết có thể không phải là một ý hay.</p>
+                </div>
+                <button style="width: 100%;" class="btn btn-white" 
+                    data-toggle="collapse" 
+                    data-target="#CollapseText" onclick="ChangeCollapseButtonText()">
+                    <span id="CreateRule">🡫 Hiển thị</span>
+                </button>
+                <h3>Mẫu đoạn văn:</h3>
+                <div class="collapse" id="SampleCollapseText">
+                    <p>*Nhựa* đóng vai trò ***quan trọng*** vì có ***__ứng dụng rộng rãi__*** trong đời sống ***__~~(Đây chỉ là văn mẫu)~~__***</p>
+                    <p>#Một *__đoạn văn__* về nhựa ~~HDPE~~# **__Nhựa__**, hay còn gọi là *chất dẻo*, là các __hợp chất cao phân tử__, được dùng làm vật liệu để sản xuất nhiều loại vật dụng trong đời sống hằng ngày như là: áo mưa, ống dẫn điện... cho đến những sản phẩm công nghiệp, gắn với đời sống hiện đại của con người. Chúng là những vật liệu có khả năng bị biến dạng khi chịu tác dụng của nhiệt, áp suất và vẫn giữ được sự biến dạng đó khi thôi tác dụng. **Chất dẻo** còn được ***sử dụng rộng rãi*** để thay thế cho các sản phẩm làm bằng: vải, gỗ, da, kim loại, thủy tinh. Vì chúng bền, nhẹ, khó vỡ, nhiều màu sắc đẹp, và __~~gây ô nhiễm môi trường~~__.</p>
+                    <hr>
+                    <p><strong>Nhựa</strong> đóng vai trò <strong><em>quan trọng</em></strong> vì có <strong><em><u>ứng dụng rộng rãi</u></em></strong> trong đời sống <strong><em><u><del>(Đây chỉ là văn mẫu)</del></u></em></strong></p>
+                    <br>
+                    <h4>Một <em><u>đoạn văn</u></em> về nhựa <del>HDPE</del><h4>
+                    <p><strong><u>Nhựa</u></strong>, hay còn gọi là <em>chất dẻo</em>, là các <u>hợp chất cao phân tử</u>, được dùng làm <em><u>vật liệu</u></em> để sản xuất nhiều loại vật dụng trong đời sống hằng ngày như là: áo mưa, ống dẫn điện... cho đến những sản phẩm công nghiệp, gắn với đời sống hiện đại của con người. Chúng là những vật liệu có khả năng bị biến dạng khi chịu tác dụng của nhiệt, áp suất và vẫn giữ được sự biến dạng đó khi thôi tác dụng. <strong>Chất dẻo</strong> còn được <strong><em>sử dụng rộng rãi</em></strong> để thay thế cho các sản phẩm làm bằng: vải, gỗ, da, kim loại, thủy tinh. Vì chúng bền, nhẹ, khó vỡ, nhiều màu sắc đẹp, và <u><del>gây ô nhiễm môi trường</del></u>.</p>
+                </div>
+                <button style="width: 100%;" class="btn btn-white" 
+                    data-toggle="collapse" 
+                    data-target="#SampleCollapseText" onclick="ChangeSampleCollapseButtonText()">
+                    <span id="SampleCreateRule">🡫 Hiển thị</span>
+                </button>
+                <br><br>
+                <form method="POST" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <h2>Tên blog:</h2>
+                    <input type="text" name="blog_post-book_name" maxlength="200" required id="id_blog_post-book_name" placeholder="Tên blog" style="width: 100%; font-size: 18px; font-weight: bold;">
+                    <h2>Hình ảnh:</h2>
+                    <input type="file" name="blog_post-book_image" accept="image/*" id="id_blog_post-book_image">
+                    <h2>Danh mục:</h2>
+                    <select name="blog_post-book_topic" required id="id_blog_post-book_topic" style="width: 100%; font-size: 18px; font-weight: bold;" class="text-center">
+                        <option value="" selected>---------</option>
+
+                        <option value="1">Sách</option>
+
+                        <option value="2">Thiết bị</option>
+                    </select>
+                    <h2>Giới thiệu<span style="color: red;" title="Thẻ này có thể áp dụng Markdown.">*</span>:</h2>
+                    <textarea name="blog_post-book_description" cols="40" rows="10" required id="id_blog_post-book_description" placeholder="Giới thiệu" style="width: 100%; font-size: 16px;"></textarea>
+                    <h2>Các đoạn văn:</h2>
+                    <div id="paragraph_area">
+                        <div class="paragraph">
+                            <h3>Đoạn 1:</h3>
+                            <h4>Tiêu đề 1:</h4>
+                            <input type="text" name="paragraph-title" maxlength="100" required placeholder="Tiêu đề">
+                            <h4>Nội dung 1<span style="color: red;" title="Thẻ này có thể áp dụng Markdown.">*</span>:</h4>
+                            <textarea name="paragraph-detail" cols="40" rows="10" required placeholder="Nội dung"></textarea>
+                        </div>
+                    </div>
+                    <button type="button" onclick="generateParagraph()">Thêm đoạn văn</button>
+                    <button type="button" onclick="deleteParagraph()">Xóa đoạn văn</button>
+                    <br>
+                    <h2>Tổng kết<span style="color: red;" title="Thẻ này có thể áp dụng Markdown.">*</span>:</h2>
+                    <textarea name="blog_post-book_summary" cols="40" rows="10" required id="id_blog_post-book_summary" placeholder="Tổng kết" style="width: 100%; font-size: 16px;"></textarea>
+                    <br>
+                    <button type="submit" name="create_submit" class="section-btn btn btn-success" value="create_blog">Đăng!</button>
+                    <button type="button" onclick="Preview()" class="section-btn btn btn-danger">Xem trước</button>
+                </form>
+                <br>
+            </div>
+            <hr>
+            <div class="container" id="detail_preview">
+                <h1>Phần xem trước:</h1>
+                <hr>
+                <h4>
+                        <a>Danh sách blog</a> / 
+                        <a class="blog_link">
+                            <span class="book_topic_class"></span>
+                        </a> / 
+                        <span style="color: gray">
+                            Review <span class="book_topic_class"></span> : <span class="book_name_class"></span>
+                        </span>
+                </h4>
+                {% comment %} id_blog_post-book_name {% endcomment %}
+                <h2>Review <span class="book_topic_class"></span> : <span class="book_name_class"></span></h2>
+
+                <p class="lead">
+                        <a class="detail-author-link">
+                            <img src="{{user_name.profile.avatar.url}}" class="detail_rounded_avatar">
+                        {{user_name}}</a> &nbsp;&nbsp;&nbsp;
+                        <i class="fa fa-calendar"></i> 01/01/2026 &nbsp;&nbsp;&nbsp;
+                        <i class="fa fa-star"></i> <span class="medium_rate_show">0</span>
+                </p>
+                <p class="lead">
+                    0 lượt đánh giá &nbsp;&nbsp;&nbsp;
+                    0 lượt bình luận
+                </p>
+                {% comment %} <img src="{% static "images/other-image-fullscreen-1-1920x700.jpg" %}" class="img-responsive" alt=""> {% endcomment %}
+                <img id="blog_image_src" src="{% static "default_book_image.png" %}" class="img-responsive" alt="" height="1280" width="1920">
+
+                <br>
+                {% comment %} 11 + 24 + 21 + 613 {% endcomment %}
+                <div id="blog_text">
+                    <p id="blog_description"></p>
+                    <br>
+                    <div id="paragraph_stack">
+
+                    </div>
+                    <p id="blog_summary"></p>
+                    <br>
+                </div>
+                
+                <br>
+
+                <div class="row">
+                    <div class="col-md-4 col-xs-12 pull-right">
+                        <h3>Đánh giá (0):</h3>
+                            <input type="hidden" name="rate_submit" value="0" id="rate_input">
+                            <i class="fa fa-star vote_star" id="star_1" onmouseenter="starHover(1)" onmouseleave="starHover({{rate}})"></i>&nbsp;
+                            <i class="fa fa-star vote_star" id="star_2" onmouseenter="starHover(2)" onmouseleave="starHover({{rate}})"></i>&nbsp;
+                            <i class="fa fa-star vote_star" id="star_3" onmouseenter="starHover(3)" onmouseleave="starHover({{rate}})"></i>&nbsp;
+                            <i class="fa fa-star vote_star" id="star_4" onmouseenter="starHover(4)" onmouseleave="starHover({{rate}})"></i>&nbsp;
+                            <i class="fa fa-star vote_star" id="star_5" onmouseenter="starHover(5)" onmouseleave="starHover({{rate}})"></i>
+                        </form>
+                        <h5>Bạn chưa vote cho blog này!</h5>
+                        <br>
+                        <h3>Các blog khác cùng tác giả:</h3>
+                        <h4>Không có blog nào để hiển thị!</h4>
+                    </div>
+
+                    <div class="col-md-8 col-xs-12" style="padding-bottom: 20px;">
+                        <h3>Bình luận (0):</h3>
+                        <p>Chưa có bình luận nào! Hãy là người đầu tiên bình luận!</p>
+                        <br>
+                        <h4>Thêm bình luận</h4>
+                            <label class="control-label">
+                                Lưu ý:
+                                <br>
+                                - Hãy cân nhắc từ ngữ trước khi bình luận vì bạn sẽ không thể sửa lại bình luận sau khi đăng!
+                                <br>
+                                - Trau chuốt từ ngữ làm sao để không quá 500 kí tự, vì đây không phải nơi bạn viết luận cuối năm!
+                            </label>
+                            <div class="form-group">
+                                <textarea name="comment_text" class="form-control" rows="10" autocomplete="off" placeholder="Bạn nghĩ gì về blog này?"></textarea>
+                            </div>
+
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script>
+            function stringProcessing(str) {
+                // Markdown
+                //Chỉnh to: #text#
+                str = str.replace(/\#(.*?)\#/g, '<h4>$1</h4>');
+
+                // bold **text**
+                str = str.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+
+                // italic *text*
+                str = str.replace(/\*(.*?)\*/g, "<em>$1</em>");
+
+                // underline __text__
+                str = str.replace(/\__(.*?)\__/g, "<u>$1</u>")
+
+                // strike ~~text~~
+                str = str.replace(/~~(.*?)~~/g, "<del>$1</del>");
+                
+                // xuống dòng: \n
+                str = str.replace(/\n/g, "<br>");
+                return str;
+            }
+            function Preview(){
+                for (let i of document.getElementsByClassName("book_name_class")){
+                    i.innerText=document.getElementById("id_blog_post-book_name").value;
+                }
+                for (let option of document.getElementById("id_blog_post-book_topic").options){
+                    if (option.value === document.getElementById("id_blog_post-book_topic").value){
+                        for (let i of document.getElementsByClassName("book_topic_class")){
+                            i.innerText=option.textContent;
+                        }
+                        break;
+                    }
+                }
+                if (document.getElementById("id_blog_post-book_image").value) document.getElementById("blog_image_src").src = URL.createObjectURL(document.getElementById("id_blog_post-book_image").files[0]);
+                document.getElementById("blog_description").innerHTML = stringProcessing(document.getElementById("id_blog_post-book_description").value);
+                document.getElementById("blog_summary").innerHTML = stringProcessing(document.getElementById("id_blog_post-book_summary").value);
+                let titles = document.getElementsByName("paragraph-title");
+                let details = document.getElementsByName("paragraph-detail");
+                let para = document.getElementById("paragraph_stack");
+                para.innerHTML = ``;
+                for (let i = 0; i<titles.length; ++i){
+                    let s = "" + (i + 1) + ". " + titles[i].value;
+                    console.log(stringProcessing(details[i].value));
+                    para.innerHTML += `
+                        <h3 class="blog_title_text">` + s + `</h3>
+                        <div class="blog_detail_text">` + stringProcessing(details[i].value) + `</div>
+                        <br>
+                    `;
+                }
+            }
+            function ChangeCollapseButtonText(){
+                if (document.getElementById("CollapseText").classList.contains("in")) {
+                    document.getElementById("CreateRule").innerText = "🡫 Hiển thị";
+                }
+                else {
+                    document.getElementById("CreateRule").innerText = "🡩 Ẩn đi";
+                }
+            }
+            function ChangeSampleCollapseButtonText(){
+                if (document.getElementById("SampleCollapseText").classList.contains("in")) {
+                    document.getElementById("SampleCreateRule").innerText = "🡫 Hiển thị";
+                }
+                else {
+                    document.getElementById("SampleCreateRule").innerText = "🡩 Ẩn đi";
+                }
+            }
+            {% comment %} document.getElementById("blog_description").innerHTML = stringProcessing("{{blog.book_description|escapejs}}");
+            document.getElementById("blog_summary").innerHTML = stringProcessing("{{blog.book_summary|escapejs}}");
+            let paragraphs = document.getElementsByClassName("blog_detail_text");
+            {% for paragraph in paragraphs %}
+                paragraphs[{{forloop.counter}} - 1].innerHTML = stringProcessing("{{paragraph.detail|escapejs}}");
+            {% endfor %}
+            {% comment %} for (let i of {{paragraphs_detail}}){
+                paragraphs[i].innerHTML = stringProcessing("{{paragraphs_detail}}");
+            } {% endcomment %}
+            
+        </script>
+        {% endif %}
+        <script defer>
+            document.getElementById("list_create_id").classList.add("active")
+        </script>
+{% endblock content %}
+
