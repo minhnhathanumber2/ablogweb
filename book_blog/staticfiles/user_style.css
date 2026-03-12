@@ -1,0 +1,17 @@
+#returnLink{
+    color: #FF0000;
+    transition: color 0.5s ease;
+}
+
+#returnLink:hover{
+    color: #c60f0f;
+}
+
+#changeLink{
+    color: #0ad00a;
+    transition: color 0.5s ease;
+}
+
+#changeLink:hover{
+    color: #199d19;
+}

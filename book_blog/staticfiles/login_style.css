@@ -1,0 +1,9 @@
+#login-card{
+    width: 400px;
+}
+#password_show:hover{
+    cursor: pointer;
+}
+#confirm_password_show:hover{
+    cursor: pointer;
+}
